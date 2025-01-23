@@ -6,7 +6,8 @@ import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
 @Modmenu(modId = SOLDisco.MOD_ID)
-@Config(name = "spiceoflife_discovery", wrapperName = "SOLDiscoConfig")
+@Config(name = "soldisco",wrapperName = "SOLDiscoConfig")
+@SuppressWarnings("unused")
 public class ConfigModel {
     @PredicateConstraint("minHpPredicate")
     @Sync(Option.SyncMode.OVERRIDE_CLIENT)

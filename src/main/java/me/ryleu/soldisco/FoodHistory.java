@@ -6,30 +6,30 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
-public class FoodHistory {
-    private final Set<Item> eatenFoods;
+public class FoodHistory extends HashSet<Item> {
+    private final Player player;
 
-    public FoodHistory() {
-        eatenFoods = new HashSet<>();
+    public FoodHistory(Player player) {
+        this.player = player;
     }
 
     public float getMaxHealth() {
-        return (float) SOLDisco.applyFoodFormula(eatenFoods.size());
+        return (float) SOLDisco.applyFoodFormula(size());
     }
 
-    public static FoodHistory read(CompoundTag compoundTag) {
-        FoodHistory foodHistory = new FoodHistory();
+    public static FoodHistory read(Player player, CompoundTag compoundTag) {
+        FoodHistory foodHistory = new FoodHistory(player);
 
-        // first, make sure the tag has our list (list num is 9)
-        if (compoundTag.contains(SOLDisco.NBT_FOOD_HISTORY_ID, 9)) {
-            // if it does, we get it as a list of strings (string num is 8)
-            ListTag foodListTag = compoundTag.getList(SOLDisco.NBT_FOOD_HISTORY_ID, 8);
+        // first, make sure the tag has our list
+        if (compoundTag.contains(SOLDisco.NBT_FOOD_HISTORY_ID, Tag.TAG_LIST)) {
+            // if it does, we get it as a list of strings
+            ListTag foodListTag = compoundTag.getList(SOLDisco.NBT_FOOD_HISTORY_ID, Tag.TAG_STRING);
             for (Tag entry : foodListTag) {
                 // make sure the entry is a string (it is, but java is java)
                 if (!(entry instanceof StringTag foodTag)) continue;
@@ -45,7 +45,7 @@ public class FoodHistory {
                     SOLDisco.LOGGER.error("{} found in nbt, but not in registry when decoding data", itemNamespace);
                 }
 
-                item.ifPresent(foodHistory.eatenFoods::add);
+                item.ifPresent(foodHistory::add);
             }
         }
 
@@ -54,18 +54,40 @@ public class FoodHistory {
 
     public void write(CompoundTag compoundTag) {
         ListTag foodListTag = new ListTag();
-        for (Item foodItem : eatenFoods) {
+        for (Item foodItem : this) {
             // get the namespaced ids for all of our foods
             foodListTag.add(StringTag.valueOf(foodItem.toString()));
         }
         compoundTag.put(SOLDisco.NBT_FOOD_HISTORY_ID, foodListTag);
     }
 
-    public boolean add(Item eatenFood) {
-        return eatenFoods.add(eatenFood);
+    @Override
+    public boolean add(Item food) {
+        boolean result = super.add(food);
+        if (result && player != null) {
+            updateMaxHealth();
+        }
+        return result;
     }
 
-    public void reset() {
-        eatenFoods.clear();
+    @Override
+    public boolean remove(Object food) {
+        boolean result = super.remove(food);
+        if (result && player != null) {
+            updateMaxHealth();
+        }
+        return result;
+    }
+
+    @Override
+    public void clear() {
+        super.clear();
+        if (player != null) {
+            updateMaxHealth();
+        }
+    }
+
+    public void updateMaxHealth() {
+        ((IPlayer) player).spiceoflife_discovery$updateMaxHealth();
     }
 }

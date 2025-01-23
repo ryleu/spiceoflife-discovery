@@ -1,6 +1,7 @@
 package me.ryleu.soldisco;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 import org.slf4j.Logger;
@@ -22,8 +23,8 @@ public class SOLDisco implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.info("{} loaded!", MOD_ID);
 
-		CONFIG.subscribeToFormula((String newFormula) -> {
-			foodFormula = new ExpressionBuilder(newFormula).variable("foodsEaten").build();
-		});
+		CommandRegistrationCallback.EVENT.register(((commandDispatcher, commandBuildContext, commandSelection) -> FoodHistoryCommand.register(commandDispatcher, commandBuildContext)));
+
+		CONFIG.subscribeToFormula((String newFormula) -> foodFormula = new ExpressionBuilder(newFormula).variable("foodsEaten").build());
 	}
 }

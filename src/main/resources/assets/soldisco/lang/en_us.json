@@ -1,0 +1,27 @@
+{
+  "text.config.soldisco.title": "Spice of Life: Discovery Configuration",
+  "text.config.soldisco.option.minHp": "Minimum HP",
+  "text.config.soldisco.option.formula": "HP formula",
+
+  "commands.soldisco.foodhistory.add.failed.single": "Player %s already has food %s in their food history",
+  "commands.soldisco.foodhistory.add.failed.multiple": "All %s player(s) already have food %s in their food history",
+  "commands.soldisco.foodhistory.add.success.single": "Added food %s to the food history of player %s",
+  "commands.soldisco.foodhistory.add.success.multiple": "Added food %s to the food history of %s player(s)",
+
+  "commands.soldisco.foodhistory.clear.everything.failed.single": "No food history was found on player %s",
+  "commands.soldisco.foodhistory.clear.everything.failed.multiple": "No food history was found on %s player(s)",
+  "commands.soldisco.foodhistory.clear.everything.success.single": "Cleared the food history of player %s",
+  "commands.soldisco.foodhistory.clear.everything.success.multiple": "Cleared the food history of %s player(s)",
+
+  "commands.soldisco.foodhistory.clear.specific.failed.single": "Player %s did not have food %s in their food history",
+  "commands.soldisco.foodhistory.clear.specific.failed.multiple": "All %s player(s) did not have food %s in their food histories",
+  "commands.soldisco.foodhistory.clear.specific.success.single": "Removed food %s from the food history of player %s",
+  "commands.soldisco.foodhistory.clear.specific.success.multiple": "Removed food %s from the food history of %s player(s)",
+
+  "commands.soldisco.foodhistory.get": "Player %s has the following %s foods in their food history: %s",
+
+  "commands.soldisco.foodhistory.query.failed.single": "Player %s does not have food %s in their food history",
+  "commands.soldisco.foodhistory.query.failed.multiple": "All %s player(s) do not have %s in their food history",
+  "commands.soldisco.foodhistory.query.success.single": "Player %s has food %s in their food history",
+  "commands.soldisco.foodhistory.query.success.multiple": "%s player(s) have food %s in their food history"
+}

@@ -9,7 +9,7 @@ with a bunch of addons!
 ### Default
 
 By default, SOL:D starts the player at 6 HP (3 hearts) and grants an additional 2 HP (1 heart) for each 5 new food items
-eaten. That formula is completely configurable in `.minecraft/config/spiceoflife_discovery.json5`. Here's what it looks
+eaten. That formula is completely configurable in `.minecraft/config/soldisco.json5`. Here's what it looks
 like by default:
 
 
@@ -46,6 +46,15 @@ Start at 3 hearts and gain a heart for every five new foods you eat (this is the
     "minHp": 6.0
 }
 ```
+
+## Commands
+
+The `/foodhistory` command lets you manage the foods you've eaten.
+
+- `foodhistory get [<player>]` gets the full food history of a player
+- `foodhistory add <food> [<players>]` adds a food to the food history of `players`
+- `foodhistory remove <food> [<players>]` removes a food from the food history of `players`
+- `foodhistory query <food> [<players>]` check if `players` have a food
 
 ## Credits
 
