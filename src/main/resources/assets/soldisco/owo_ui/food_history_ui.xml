@@ -5,8 +5,11 @@
             <children> <!--(1)-->
                 <flow-layout direction="vertical"> <!--(2)-->
                     <children>
+                        <scroll direction="horizontal">
+                            <template name="food-entry"/>
+                        </scroll>
                         <button id="the-button"> <!--(3)-->
-                            <text>A Button</text> <!--(6)-->
+                            <text>She</text> <!--(6)-->
                         </button>
                     </children>
 
@@ -33,4 +36,14 @@
             </surface>
         </flow-layout>
     </components>
+    
+    <templates>
+        <template name="history-entry">
+            <flow-layout direction="horizontal">
+                <children>
+
+                </children>
+            </flow-layout>
+        </template>
+    </templates>
 </owo-ui>
