@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"me.ryleu.soldisco.SOLDiscoClient"
+		],
+		"cardinal-components": [
+			"me.ryleu.soldisco.component.SOLDiscoComponents"
 		]
 	},
 	"mixins": [

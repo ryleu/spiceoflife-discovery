@@ -1,6 +1,7 @@
-package me.ryleu.soldisco;
+package me.ryleu.soldisco.command;
 
 import com.mojang.brigadier.CommandDispatcher;
+import me.ryleu.soldisco.IPlayer;
 import me.ryleu.soldisco.component.IFoodHistory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandBuildContext;

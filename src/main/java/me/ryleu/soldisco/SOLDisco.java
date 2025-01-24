@@ -1,5 +1,6 @@
 package me.ryleu.soldisco;
 
+import me.ryleu.soldisco.command.FoodHistoryCommand;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.objecthunter.exp4j.Expression;
