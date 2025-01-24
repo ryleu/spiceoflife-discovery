@@ -1,6 +1,7 @@
 package me.ryleu.soldisco;
 
 import com.mojang.brigadier.CommandDispatcher;
+import me.ryleu.soldisco.component.IFoodHistory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -196,7 +197,7 @@ public class FoodHistoryCommand {
     ) {
         Item food = foodHolder.value();
         final int result = (int) players.stream().filter(player ->
-                ((IPlayer) player).spiceoflife_discovery$getFoodHistory().add(food)
+                ((IPlayer) player).soldisco$getFoodHistory().add(food)
         ).count();
 
         Component foodName = food.getDefaultInstance().getDisplayName();
@@ -247,7 +248,7 @@ public class FoodHistoryCommand {
             Collection<? extends Player> players
     ) {
         final int result = (int) players.stream().filter((player -> {
-            FoodHistory foodHistory = ((IPlayer) player).spiceoflife_discovery$getFoodHistory();
+            IFoodHistory foodHistory = ((IPlayer) player).soldisco$getFoodHistory();
             boolean success = !foodHistory.isEmpty();
             foodHistory.clear();
             return success;
@@ -298,7 +299,7 @@ public class FoodHistoryCommand {
     ) {
         Item food = foodHolder.value();
         final int result = (int) players.stream().filter(player ->
-                ((IPlayer) player).spiceoflife_discovery$getFoodHistory().remove(food)
+                ((IPlayer) player).soldisco$getFoodHistory().remove(food)
         ).count();
 
         Component foodName = food.getDefaultInstance().getDisplayName();
@@ -348,7 +349,7 @@ public class FoodHistoryCommand {
             CommandSourceStack sourceStack,
             Player player
     ) {
-        FoodHistory foodHistory = ((IPlayer) player).spiceoflife_discovery$getFoodHistory();
+        IFoodHistory foodHistory = ((IPlayer) player).soldisco$getFoodHistory();
 
         MutableComponent component = Component.literal("[");
 
@@ -386,7 +387,7 @@ public class FoodHistoryCommand {
     ) {
         Item food = foodHolder.value();
         final int result = (int) players.stream().filter(player ->
-                ((IPlayer) player).spiceoflife_discovery$getFoodHistory().contains(food)
+                ((IPlayer) player).soldisco$getFoodHistory().contains(food)
         ).count();
 
         Component foodName = food.getDefaultInstance().getDisplayName();

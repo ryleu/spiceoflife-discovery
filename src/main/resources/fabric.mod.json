@@ -17,6 +17,9 @@
 	"entrypoints": {
 		"main": [
 			"me.ryleu.soldisco.SOLDisco"
+		],
+		"client": [
+			"me.ryleu.soldisco.SOLDiscoClient"
 		]
 	},
 	"mixins": [
@@ -31,5 +34,10 @@
 	},
 	"suggests": {
 		"modmenu": "*"
+	},
+	"custom": {
+		"cardinal-components": [
+			"soldisco:food_history"
+		]
 	}
 }
