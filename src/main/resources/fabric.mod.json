@@ -2,7 +2,7 @@
 	"schemaVersion": 1,
 	"id": "soldisco",
 	"version": "${version}",
-	"name": "Spice of Life Discovery",
+	"name": "Spice of Life: Discovery",
 	"description": "Spice of Life inspired mod to encourage new food discovery!",
 	"authors": [
 		"ryleu"
