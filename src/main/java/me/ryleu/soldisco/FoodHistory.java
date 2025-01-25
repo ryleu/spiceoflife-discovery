@@ -18,6 +18,7 @@ import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static me.ryleu.soldisco.SOLDisco.MOD_ID;
 import static me.ryleu.soldisco.component.SOLDiscoComponents.FOOD_HISTORY_COMPONENT_KEY;
@@ -83,14 +84,30 @@ public class FoodHistory implements IFoodHistory, AutoSyncedComponent {
     }
 
     @Override
+    public void sync() {
+        FOOD_HISTORY_COMPONENT_KEY.sync(player, this);
+        updateMaxHealth();
+    }
+
+    @Override
     public Iterator<Item> iterator() {
         return history.iterator();
     }
 
     @Override
+    public Stream<Item> stream() {
+        return history.stream();
+    }
+
+    @Override
     public boolean add(Item toAdd) {
+        return add(toAdd, true);
+    }
+
+    @Override
+    public boolean add(Item toAdd, boolean sync) {
         boolean result = history.add(toAdd);
-        if (result) {
+        if (result && sync) {
             FOOD_HISTORY_COMPONENT_KEY.sync(
                     player,
                     (buf, p) ->
@@ -103,8 +120,13 @@ public class FoodHistory implements IFoodHistory, AutoSyncedComponent {
 
     @Override
     public boolean remove(Item toRemove) {
+        return remove(toRemove, true);
+    }
+
+    @Override
+    public boolean remove(Item toRemove, boolean sync) {
         boolean result = history.remove(toRemove);
-        if (result) {
+        if (result && sync) {
             FOOD_HISTORY_COMPONENT_KEY.sync(
                     player,
                     (buf, p) ->

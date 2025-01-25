@@ -3,6 +3,8 @@
   "text.config.soldisco.option.minHp": "Minimum HP",
   "text.config.soldisco.option.formula": "HP formula",
 
+  "menu.soldisco.foodHistory": "Food History",
+
   "commands.soldisco.foodhistory.add.failed.single": "Player %s already has food %s in their food history",
   "commands.soldisco.foodhistory.add.failed.multiple": "All %s player(s) already have food %s in their food history",
   "commands.soldisco.foodhistory.add.success.single": "Added food %s to the food history of player %s",

@@ -1,8 +1,10 @@
 package me.ryleu.soldisco.command;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import me.ryleu.soldisco.IPlayer;
 import me.ryleu.soldisco.component.IFoodHistory;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -10,6 +12,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceArgument;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
@@ -25,170 +28,196 @@ public class FoodHistoryCommand {
     public static final int PERMISSION_LEVEL = 2;
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
-        dispatcher.register(
-                Commands.literal("foodhistory")
-                        .requires(
-                                source -> source.hasPermission(
-                                        PERMISSION_LEVEL
-                                )
+
+        LiteralArgumentBuilder<CommandSourceStack> builder = Commands.literal("foodhistory")
+                .requires(
+                        source -> source.hasPermission(
+                                PERMISSION_LEVEL
                         )
-                        .then(
-                                Commands.literal("clear")
-                                        .executes(
-                                                commandContext -> clearFoods(
-                                                        commandContext.getSource(),
-                                                        ImmutableList.of(
-                                                                commandContext.getSource().getPlayerOrException()
-                                                        )
-                                                )
-                                        )
-                                        .then(
-                                                Commands.argument(
-                                                        "targets",
-                                                                EntityArgument.players()
-                                                        )
-                                                        .executes(
-                                                                commandContext -> clearFoods(
-                                                                        commandContext.getSource(),
-                                                                        EntityArgument.getPlayers(
-                                                                                commandContext,
-                                                                                "targets"
-                                                                        )
-                                                                )
-                                                        )
-                                                        .then(
-                                                                Commands.argument(
-                                                                        "food",
-                                                                                ResourceArgument.resource(
-                                                                                        context,
-                                                                                        Registries.ITEM
-                                                                                )
-                                                                        )
-                                                                        .executes(
-                                                                                commandContext -> clearFood(
-                                                                                        commandContext.getSource(),
-                                                                                        EntityArgument.getPlayers(
-                                                                                                commandContext,
-                                                                                                "targets"
-                                                                                        ),
-                                                                                        ResourceArgument.getResource(
-                                                                                                commandContext,
-                                                                                                "food",
-                                                                                                Registries.ITEM
-                                                                                        )
-                                                                                )
-                                                                        )
-                                                        )
-                                        )
-                        )
-                        .then(
-                                Commands.literal("add")
-                                        .then(
-                                                Commands.argument(
-                                                                "food",
-                                                                ResourceArgument.resource(
-                                                                        context,
-                                                                        Registries.ITEM
-                                                                )
-                                                        )
-                                                        .executes(
-                                                                commandContext -> addFood(
-                                                                        commandContext.getSource(),
-                                                                        ImmutableList.of(commandContext.getSource().getPlayerOrException()),
-                                                                        ResourceArgument.getResource(
-                                                                                commandContext,
-                                                                                "food",
-                                                                                Registries.ITEM
-                                                                        )
-                                                                )
-                                                        )
-                                                        .then(
-                                                                Commands.argument(
-                                                                        "targets",
-                                                                        EntityArgument.players()
-                                                                )
-                                                                        .executes(
-                                                                                commandContext -> addFood(
-                                                                                        commandContext.getSource(),
-                                                                                        EntityArgument.getPlayers(
-                                                                                                commandContext,
-                                                                                                "targets"
-                                                                                        ),
-                                                                                        ResourceArgument.getResource(
-                                                                                                commandContext,
-                                                                                                "food",
-                                                                                                Registries.ITEM
-                                                                                        )
-                                                                                )
-                                                                        )
-                                                        )
-                                        )
-                        )
-                        .then(
-                                Commands.literal("get")
-                                        .executes(
-                                                commandContext -> getFood(
-                                                        commandContext.getSource(),
+                )
+                .then(
+                        Commands.literal("clear")
+                                .executes(
+                                        commandContext -> clearFoods(
+                                                commandContext.getSource(),
+                                                ImmutableList.of(
                                                         commandContext.getSource().getPlayerOrException()
                                                 )
                                         )
-                                        .then(
-                                                Commands.argument(
-                                                        "target",
-                                                        EntityArgument.player()
+                                )
+                                .then(
+                                        Commands.argument(
+                                                "targets",
+                                                        EntityArgument.players()
                                                 )
-                                                        .executes(
-                                                                commandContext -> getFood(
-                                                                        commandContext.getSource(),
-                                                                        EntityArgument.getPlayer(
-                                                                                commandContext,
-                                                                                "target"
-                                                                        )
+                                                .executes(
+                                                        commandContext -> clearFoods(
+                                                                commandContext.getSource(),
+                                                                EntityArgument.getPlayers(
+                                                                        commandContext,
+                                                                        "targets"
                                                                 )
                                                         )
-                                        )
-                        )
-                        .then(
-                                Commands.literal("query")
-                                        .then(
-                                                Commands.argument(
+                                                )
+                                                .then(
+                                                        Commands.argument(
+                                                                "food",
+                                                                        ResourceArgument.resource(
+                                                                                context,
+                                                                                Registries.ITEM
+                                                                        )
+                                                                )
+                                                                .executes(
+                                                                        commandContext -> clearFood(
+                                                                                commandContext.getSource(),
+                                                                                EntityArgument.getPlayers(
+                                                                                        commandContext,
+                                                                                        "targets"
+                                                                                ),
+                                                                                ResourceArgument.getResource(
+                                                                                        commandContext,
+                                                                                        "food",
+                                                                                        Registries.ITEM
+                                                                                )
+                                                                        )
+                                                                )
+                                                )
+                                )
+                )
+                .then(
+                        Commands.literal("add")
+                                .then(
+                                        Commands.argument(
                                                         "food",
                                                         ResourceArgument.resource(
                                                                 context,
                                                                 Registries.ITEM
                                                         )
                                                 )
-                                                        .executes(
-                                                                commandContext -> queryFood(
-                                                                        commandContext.getSource(),
-                                                                        ImmutableList.of(commandContext.getSource().getPlayerOrException()),
-                                                                        ResourceArgument.getResource(
-                                                                                commandContext,
-                                                                                "food",
-                                                                                Registries.ITEM
-                                                                        )
+                                                .executes(
+                                                        commandContext -> addFood(
+                                                                commandContext.getSource(),
+                                                                ImmutableList.of(commandContext.getSource().getPlayerOrException()),
+                                                                ResourceArgument.getResource(
+                                                                        commandContext,
+                                                                        "food",
+                                                                        Registries.ITEM
                                                                 )
                                                         )
-                                                        .then(
-                                                                Commands.argument(
-                                                                        "targets",
-                                                                        EntityArgument.players()
-                                                                )
-                                                                        .executes(
-                                                                                commandContext -> queryFood(
-                                                                                        commandContext.getSource(),
-                                                                                        EntityArgument.getPlayers(commandContext, "targets"),
-                                                                                        ResourceArgument.getResource(
-                                                                                                commandContext,
-                                                                                                "food",
-                                                                                                Registries.ITEM
-                                                                                        )
+                                                )
+                                                .then(
+                                                        Commands.argument(
+                                                                "targets",
+                                                                EntityArgument.players()
+                                                        )
+                                                                .executes(
+                                                                        commandContext -> addFood(
+                                                                                commandContext.getSource(),
+                                                                                EntityArgument.getPlayers(
+                                                                                        commandContext,
+                                                                                        "targets"
+                                                                                ),
+                                                                                ResourceArgument.getResource(
+                                                                                        commandContext,
+                                                                                        "food",
+                                                                                        Registries.ITEM
                                                                                 )
                                                                         )
-                                                        )
+                                                                )
+                                                )
+                                )
+                )
+                .then(
+                        Commands.literal("get")
+                                .executes(
+                                        commandContext -> getFood(
+                                                commandContext.getSource(),
+                                                commandContext.getSource().getPlayerOrException()
                                         )
-                        )
-        );
+                                )
+                                .then(
+                                        Commands.argument(
+                                                "target",
+                                                EntityArgument.player()
+                                        )
+                                                .executes(
+                                                        commandContext -> getFood(
+                                                                commandContext.getSource(),
+                                                                EntityArgument.getPlayer(
+                                                                        commandContext,
+                                                                        "target"
+                                                                )
+                                                        )
+                                                )
+                                )
+                )
+                .then(
+                        Commands.literal("query")
+                                .then(
+                                        Commands.argument(
+                                                "food",
+                                                ResourceArgument.resource(
+                                                        context,
+                                                        Registries.ITEM
+                                                )
+                                        )
+                                                .executes(
+                                                        commandContext -> queryFood(
+                                                                commandContext.getSource(),
+                                                                ImmutableList.of(commandContext.getSource().getPlayerOrException()),
+                                                                ResourceArgument.getResource(
+                                                                        commandContext,
+                                                                        "food",
+                                                                        Registries.ITEM
+                                                                )
+                                                        )
+                                                )
+                                                .then(
+                                                        Commands.argument(
+                                                                "targets",
+                                                                EntityArgument.players()
+                                                        )
+                                                                .executes(
+                                                                        commandContext -> queryFood(
+                                                                                commandContext.getSource(),
+                                                                                EntityArgument.getPlayers(commandContext, "targets"),
+                                                                                ResourceArgument.getResource(
+                                                                                        commandContext,
+                                                                                        "food",
+                                                                                        Registries.ITEM
+                                                                                )
+                                                                        )
+                                                                )
+                                                )
+                                )
+                );
+
+        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            builder
+                    .then(
+                            Commands.literal(
+                                    "addall"
+                            )
+                                    .executes(
+                                            commandContext -> addAll(
+                                                    commandContext.getSource(),
+                                                    commandContext.getSource().getPlayerOrException()
+                                            )
+                                    )
+                    );
+        }
+
+        dispatcher.register(builder);
+    }
+
+    private static int addAll(
+            CommandSourceStack sourceStack,
+            Player player
+    ) {
+        IFoodHistory foodHistory = ((IPlayer) player).soldisco$getFoodHistory();
+        BuiltInRegistries.ITEM.stream().forEach(item -> foodHistory.add(item, false));
+        foodHistory.sync();
+        return getFood(sourceStack, player);
     }
 
     private static int addFood(

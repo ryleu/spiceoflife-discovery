@@ -2,36 +2,52 @@
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20/owo-ui.xsd">
     <components>
         <flow-layout direction="vertical">
-            <children> <!--(1)-->
-                <flow-layout direction="vertical"> <!--(2)-->
+            <children>
+                <flow-layout direction="vertical">
                     <children>
-                        <scroll direction="horizontal">
-                            <template name="food-entry"/>
-                        </scroll>
-                        <button id="the-button"> <!--(3)-->
-                            <text>She</text> <!--(6)-->
-                        </button>
+                        <label id="title">
+                            <text translate="true">menu.soldisco.foodHistory</text>
+                            <shadow>true</shadow>
+
+                            <margins>
+                                <vertical>10</vertical>
+                            </margins>
+                        </label>
                     </children>
 
-                    <horizontal-alignment>center</horizontal-alignment>
                     <vertical-alignment>center</vertical-alignment>
-
-                    <!--(4)-->
-                    <padding>
-                        <all>10</all>
-                    </padding>
-
-                    <surface>
-                        <panel dark="true"/>
-                    </surface>
                 </flow-layout>
-            </children>
+
+                <scroll direction="vertical">
+                    <flow-layout direction="vertical" id="entry-area">
+                        <children>
+
+                        </children>
+
+                        <horizontal-alignment>left</horizontal-alignment>
+                        <vertical-alignment>center</vertical-alignment>
+                        <padding>
+                            <right>3</right>
+                        </padding>
+                    </flow-layout>
+
+                    <sizing>
+                        <horizontal method="fill">80</horizontal>
+                        <vertical method="fill">90</vertical>
+                    </sizing>
+                    <scrollbar-color>white</scrollbar-color>
+                    <scrollbar-thiccness>3</scrollbar-thiccness>
+                    <padding>
+                        <all>1</all>
+                    </padding>
+                </scroll>
+                </children>
 
             <vertical-alignment>center</vertical-alignment>
             <horizontal-alignment>center</horizontal-alignment>
 
-            <!--(5)-->
             <surface>
+                <options-background/>
                 <vanilla-translucent/>
             </surface>
         </flow-layout>
@@ -41,9 +57,43 @@
         <template name="history-entry">
             <flow-layout direction="horizontal">
                 <children>
-
+                    <item>
+                        <sizing>
+                            <vertical method="fixed">15</vertical>
+                            <horizontal method="fixed">15</horizontal>
+                        </sizing>
+                        <stack>{{item-id}}</stack>
+                    </item>
+                    <label>
+                        <text translate="true">{{item-name}}</text>
+                        <tooltip-text translate="true">{{item-name}}</tooltip-text>
+                        <horizontal-text-alignment>left</horizontal-text-alignment>
+                        <color>white</color>
+                        <sizing>
+                            <horizontal method="content">10</horizontal>
+                        </sizing>
+                    </label>
                 </children>
+                <horizontal-alignment>left</horizontal-alignment>
+                <vertical-alignment>center</vertical-alignment>
+                <padding>
+                    <all>5</all>
+                </padding>
+                <surface>
+                    <flat>dark-gray</flat>
+                    <outline>gray</outline>
+                </surface>
+                <sizing>
+                    <horizontal method="fill">{{fill}}</horizontal>
+                </sizing>
             </flow-layout>
+        </template>
+        <template name="history-row">
+            <grid-layout rows="1" columns="{{columns}}">
+                <children>
+                    
+                </children>
+            </grid-layout>
         </template>
     </templates>
 </owo-ui>
