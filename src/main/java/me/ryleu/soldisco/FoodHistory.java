@@ -173,9 +173,7 @@ public class FoodHistory implements IFoodHistory, AutoSyncedComponent {
     public void writeSyncPacket(RegistryFriendlyByteBuf buf, ServerPlayer player) {
         buf.writeBoolean(true); // true means a full re-send
         buf.writeInt(history.size()); // write how many ids we're about to send
-        history.forEach(item -> { // write all integer ids
-            buf.writeById(BuiltInRegistries.ITEM::getId, item);
-        });
+        history.forEach(item -> buf.writeById(BuiltInRegistries.ITEM::getId, item)); // write all integer ids
     }
 
     private void writeAddPacket(RegistryFriendlyByteBuf buf, Item toAdd) {

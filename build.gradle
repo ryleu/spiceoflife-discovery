@@ -96,6 +96,16 @@ jar {
 	}
 }
 
+shadowJar {
+	configurations = [project.configurations.shadow]
+	archiveClassifier.set("dev")
+	relocate "com.gradleup", "me.ryleu.soldisco.com.gradleup.shadow"
+}
+remapJar {
+	dependsOn(shadowJar)
+	inputFile = tasks.shadowJar.archiveFile
+}
+
 // configure the maven publication
 publishing {
 	publications {
