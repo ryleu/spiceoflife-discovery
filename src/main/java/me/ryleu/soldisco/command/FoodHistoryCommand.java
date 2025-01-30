@@ -1,10 +1,8 @@
 package me.ryleu.soldisco.command;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import me.ryleu.soldisco.IPlayer;
 import me.ryleu.soldisco.component.IFoodHistory;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -29,7 +27,7 @@ public class FoodHistoryCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
 
-        LiteralArgumentBuilder<CommandSourceStack> builder = Commands.literal("foodhistory")
+        dispatcher.register(Commands.literal("foodhistory")
                 .requires(
                         source -> source.hasPermission(
                                 PERMISSION_LEVEL
@@ -190,24 +188,19 @@ public class FoodHistoryCommand {
                                                                 )
                                                 )
                                 )
-                );
-
-        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            builder
-                    .then(
-                            Commands.literal(
-                                    "addall"
-                            )
-                                    .executes(
-                                            commandContext -> addAll(
-                                                    commandContext.getSource(),
-                                                    commandContext.getSource().getPlayerOrException()
-                                            )
-                                    )
-                    );
-        }
-
-        dispatcher.register(builder);
+                )
+                .then(
+                        Commands.literal(
+                                "addall"
+                        )
+                                .executes(
+                                        commandContext -> addAll(
+                                                commandContext.getSource(),
+                                                commandContext.getSource().getPlayerOrException()
+                                        )
+                                )
+                )
+        );
     }
 
     private static int addAll(
