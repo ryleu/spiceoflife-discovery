@@ -1,0 +1,16 @@
+{
+	"required": true,
+	"package": "me.ryleu.soldisco.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"PlayerMixin",
+		"ServerPlayerMixin"
+	],
+	"client": [
+		"AbstractContainerScreenMixin",
+		"GuiMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
