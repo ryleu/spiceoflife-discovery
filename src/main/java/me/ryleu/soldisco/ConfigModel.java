@@ -13,8 +13,16 @@ public class ConfigModel {
     @Sync(Option.SyncMode.OVERRIDE_CLIENT)
     public double minHp = 1;
 
+    @PredicateConstraint("maxHpPredicate")
+    @Sync(Option.SyncMode.OVERRIDE_CLIENT)
+    public double maxHp = -1;
+
     public static boolean minHpPredicate(double d) {
         return d >= 1;
+    }
+
+    public static boolean maxHpPredicate(double d) {
+        return d == -1 || d >= 1;
     }
 
     @Hook
