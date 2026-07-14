@@ -1,6 +1,7 @@
 {
   "text.config.soldisco.title": "Spice of Life: Discovery Configuration",
   "text.config.soldisco.option.minHp": "Minimum HP",
+  "text.config.soldisco.option.maxHp": "Maximum HP (-1 to disable)",
   "text.config.soldisco.option.formula": "HP formula",
 
   "menu.soldisco.foodHistory": "Food History",
