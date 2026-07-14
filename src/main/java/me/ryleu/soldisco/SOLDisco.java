@@ -16,11 +16,18 @@ public class SOLDisco implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     public static double applyFoodFormula(int foodsEaten) {
-		// we don't need checks because those are done by owo-lib
-        return Math.max(
+		double toReturn = Math.max(
 				foodFormula.setVariable("foodsEaten", foodsEaten).evaluate(),
 				CONFIG.minHp()
 		);
+
+		// if the maxHp isn't -1, then we use it as a max
+		double maxHp = CONFIG.maxHp();
+		if (maxHp != -1) {
+			toReturn = Math.min(maxHp, toReturn);
+		}
+
+        return toReturn;
     }
 
     @Override
